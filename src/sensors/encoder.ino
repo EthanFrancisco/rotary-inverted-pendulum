@@ -1,5 +1,9 @@
 void initEncoder() {
-    // Initialize the encoder
+    // Initialize the encoders
+    pinMode(encoder1PinA, INPUT);
+    pinMode(encoder1PinB, INPUT);
+    pinMode(encoder2PinA, INPUT);
+    pinMode(encoder2PinB, INPUT);
 }
 
 float readEncoder() {
