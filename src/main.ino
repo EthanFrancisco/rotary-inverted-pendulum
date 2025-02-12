@@ -8,7 +8,8 @@ void setup() {
 
     // Initialize sensors and actuators
     initEncoder();
-    initMotorDriver();
+    initMotorDriver1();
+    initMotorDriver2();
 }
 
 void loop() {
@@ -16,10 +17,12 @@ void loop() {
     float angle = readEncoder();
 
     // Compute the control signal using the PID controller
-    float controlSignal = computerPID(angle);
+    float controlSignal1 = computePID(angle);
+    float controlSignal2 = computePID(angle); // Adjust as needed for the second motor
 
-    // Apply the control signal to the motor
-    setMotorSpeed(controlSignal);
+    // Apply the control signal to the motors
+    setMotorSpeed1(controlSignal1);
+    setMotorSpeed2(controlSignal2);
 
     // Add a small delay to avoid overwhelming the microcontroller
     delay(10);

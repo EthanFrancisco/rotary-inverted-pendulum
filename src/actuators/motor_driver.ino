@@ -1,7 +1,15 @@
-void initMotorDriver() {
-    // Initialize the motor driver
+void initMotorDriver1() {
+    // Initialize the first motor driver
 }
 
-void setMotorSpeed(float speed) {
-    // Set the motor speed based on the control signal
+void initMotorDriver2() {
+    // Initialize the second motor driver
+}
+
+void setMotorSpeed1(float speed) {
+    // Set the speed for the first motor
+}
+
+void setMotorSpeed2(float speed) {
+    // Set the speed for the second motor
 }
