@@ -37,11 +37,12 @@ void setup() {
 
 void loop() {
     // Read the current angle of the pendulum
-    float angle = readEncoder();
+    float angle1 = readEncoder1();
+    float angle2 = readEncoder2();
 
     // Compute the control signal using the PID controller
-    float controlSignal1 = computePID(angle);
-    float controlSignal2 = computePID(angle); // Adjust as needed for the second motor
+    float controlSignal1 = computePID(angle1);
+    float controlSignal2 = computePID(angle2); // Adjust as needed for the second motor
 
     // Apply the control signal to the motors
     setMotorSpeed1(controlSignal1);
