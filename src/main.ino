@@ -21,8 +21,8 @@ float theta = 0.0;                         // Pendulum angle in degrees
 float theta_d = 0.0;                       // Pendulum angular velocity (degrees/s)
 
 // Control gains (tune these values for your system)
-const float kP = 0.953;   // Proportional gain - 0.953
-const float kI = 0.0013;  // Integral gain - 0.0013
+const float kP = 2.0;   // Proportional gain - 0.953
+const float kI = 0.001;  // Integral gain - 0.0013
 const float kD = 0.0;    // Derivative gain
 const float BIAS = 0.0;  // Bias term
 
