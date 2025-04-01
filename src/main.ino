@@ -10,6 +10,9 @@
 #define motorPin2 9
 #define motorPinE 11
 
+// FSR Pin Setup
+#define fsrPin A0
+
 // LCD Setup
 LiquidCrystal_I2C lcd(0x27, 16, 2);
 
@@ -41,6 +44,13 @@ float move_degs[1000];  // Motor movement degrees
 // PID variables
 float error_prev = 0;
 float integral = 0;
+
+// FSR variables for averaging
+//const int numFSRSamples = 20;  // Number of samples to average
+//int fsrReadings[numFSRSamples]; // Array to store FSR readings
+//int fsrIndex = 0;               // Index for FSR readings
+//int totalFSR = 0;               // Sum of FSR readings
+//float avgFSR = 0;               // Average FSR value
 
 // Function to control the motor with PWM signal
 void motorCommand(double PWMcommand) {
@@ -115,6 +125,18 @@ void loop() {
     return;
   }
 
+  // Read the FSR value and update the average
+  //int fsrValue = analogRead(fsrPin);          // Read FSR raw value
+  //totalFSR -= fsrReadings[fsrIndex];          // Subtract the last reading
+  //fsrReadings[fsrIndex] = fsrValue;           // Store the new FSR reading
+  //totalFSR += fsrValue;                       // Add the nw reading to the total
+  //fsrIndex = (fsrIndex + 1) % numFSRSamples;  // Update the index for next sample
+  //avgFSR = totalFSR / numFSRSamples;          // Calculate the average FSR value
+
+  // Debug: Print the average FSR value
+  //Serial.print("Avg FSR: ");
+  //Serial.println(avgFSR);
+
   unsigned long currentTime = millis();
   float timeElapsed = (currentTime - lastTime) / 1000.0;  // Time in seconds
 
@@ -128,6 +150,11 @@ void loop() {
 
   // Apply PID control law: u = Kp * error + Ki * integral + Kd * derivative + bias
   float u = (kP * error) + (kI * integral) + (kD * derivative) + BIAS;
+
+  // Modify motor control based on the FSR average
+  //if (abs(avgFSR) > 300) {
+  //  u = 0;
+  //}
 
   // Apply deadzone to prevent jittering near the target angle
   if (abs(error) < 0.6) {
@@ -145,9 +172,9 @@ void loop() {
   prevEncoderTicks = encoderTicks;
 
   // Store data for debugging/metrics
-  intervals[encoderTicks] = timeElapsed * 1000;  // Store interval in milliseconds
-  enc_degs[encoderTicks] = theta;
-  move_degs[encoderTicks] = u;
+  //intervals[encoderTicks] = timeElapsed * 1000;  // Store interval in milliseconds
+  //enc_degs[encoderTicks] = theta;
+  //move_degs[encoderTicks] = u;
 
   // Print relevant data for plotting in Serial Plotter format
   Serial.print("Angle:");
@@ -162,6 +189,10 @@ void loop() {
   lcd.print("Angle: ");
   lcd.setCursor(7, 0);
   lcd.print(theta, 2);
+  //lcd.setCursor(0, 1);
+  //lcd.print("FSR: ");
+  //lcd.setCursor(5, 1);
+  //lcd.print(fsrValue, 2);
 
   // Timing: Wait to maintain the control loop at a fixed rate (100Hz)
   lastTime = currentTime;
